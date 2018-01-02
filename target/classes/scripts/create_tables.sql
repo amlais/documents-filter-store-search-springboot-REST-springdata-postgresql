@@ -1,0 +1,8 @@
+CREATE TABLE DOCUMENT (
+   ID BIGINT PRIMARY KEY NOT NULL,
+   firstName CHARACTER VARYING(256),
+   file TEXT,
+   tsv JSONB
+);
+
+CREATE SEQUENCE hibernate_sequence;

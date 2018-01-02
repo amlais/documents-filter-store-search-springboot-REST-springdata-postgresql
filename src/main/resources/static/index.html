@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html ng-app="uploadApp">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<!--<meta name="_csrf" content="${_csrf.token}"/>
+	<!-- default header name is X-CSRF-TOKEN -->
+	<!--<meta name="_csrf_header" content="${_csrf.headerName}"/>-->
+	<title>CVtheque</title>
+	
+	<script src="./lib/plugin/angular.min.js"></script>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+	<script src="app/documentService.js"></script>
+	<script src="app/app.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.3/angular-ui-router.min.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	
+</head>
+<body>
+
+	<div ng-controller="accueilController">
+	
+		<nav class="navbar navbar-inverse">
+			<div class="container">
+				<div class="navbar-header">
+					<a class="navbar-brand">CVTheque Infolink</a>
+				</div>
+				
+				<ul class="nav navbar-nav navbar-right">
+					<li><a ui-sref="accueil"><i class="glyphicon glyphicon-home"></i> Accueil</a></li>
+					<li><a ui-sref="documents"><i class="glyphicon glyphicon-book"></i> Documents</a></li>
+					<li><a ui-sref="contact"><i class="glyphicon glyphicon-comment"></i> Contact</a></li>
+				</ul>
+			</div>
+		</nav>
+		
+		
+			<div ui-view></div>
+	</div>
+</body>
+</html>
