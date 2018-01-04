@@ -14,7 +14,7 @@ import com.amir.domain.Document;
 
 @Transactional
 public interface DocumentService {
-	public List<Document> fulltextSearch(String searchQuery);
+	List<Document> fulltextSearch(String searchQuery);
 
     ResponseMetadata save(MultipartFile multipartFile) throws IOException, SAXException, TikaException;
 
