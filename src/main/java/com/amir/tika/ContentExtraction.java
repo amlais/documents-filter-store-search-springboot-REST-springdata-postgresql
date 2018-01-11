@@ -1,22 +1,12 @@
 package com.amir.tika;
 
-import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
 import org.apache.tika.Tika;
 import org.apache.tika.exception.TikaException;
 import org.apache.tika.io.TikaInputStream;
-import org.apache.tika.metadata.Metadata;
-import org.apache.tika.parser.ParseContext;
-import org.apache.tika.parser.microsoft.ooxml.OOXMLParser;
-import org.apache.tika.parser.pdf.PDFParser;
-import org.apache.tika.sax.BodyContentHandler;
 import org.springframework.web.multipart.MultipartFile;
 import org.xml.sax.SAXException;
 
@@ -46,32 +36,4 @@ public class ContentExtraction {
 		else
 			return "Invalid content";
     }
-	
-	/*public String parseContent(String filetype, InputStream inputstream) throws IOException, SAXException, TikaException{
-		BodyContentHandler handler = new BodyContentHandler();
-		Metadata metadata = new Metadata();
-		ParseContext pcontext = new ParseContext();
-		switch (filetype) {
-		    case "application/pdf":
-		        return parsePDF(inputstream, handler, pcontext, metadata);
-		    case "application/msword":
-		    	return parseMSWORDS(inputstream, handler, pcontext, metadata);
-		default: 
-		    	return "Invalid content";
-		}
-	}
-	
-	public String parsePDF(InputStream inputstream, BodyContentHandler handler, ParseContext pcontext, Metadata metadata) throws IOException, SAXException, TikaException{
-    	//parsing the document using PDF parser
-    	PDFParser pdfparser = new PDFParser(); 
-        pdfparser.parse(inputstream, handler, metadata,pcontext);
-        return handler.toString();
-	}
-	
-	public String parseMSWORDS(InputStream inputstream, BodyContentHandler handler, ParseContext pcontext, Metadata metadata) throws IOException, SAXException, TikaException{
-		//OOXml parser
-		OOXMLParser  msofficeparser = new OOXMLParser (); 
-		msofficeparser.parse(inputstream, handler, metadata,pcontext);
-		return handler.toString();
-	}*/
 }
