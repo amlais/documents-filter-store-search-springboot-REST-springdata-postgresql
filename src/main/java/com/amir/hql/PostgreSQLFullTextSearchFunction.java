@@ -6,7 +6,6 @@ import org.hibernate.QueryException;
 import org.hibernate.dialect.function.SQLFunction;
 import org.hibernate.engine.spi.Mapping;
 import org.hibernate.engine.spi.SessionFactoryImplementor;
-import org.hibernate.tool.hbm2ddl.SchemaExport.Type;
 import org.hibernate.type.BooleanType;
 
 public class PostgreSQLFullTextSearchFunction implements SQLFunction {
@@ -24,39 +23,14 @@ public class PostgreSQLFullTextSearchFunction implements SQLFunction {
 	public boolean hasParenthesesIfNoArguments() {
 		return false;
 	}
-	/*
-	@SuppressWarnings("rawtypes")
-	public String render(List args, SessionFactoryImplementor factory)
-			throws QueryException {
-		if (args!= null && args.size() < 2) {
-			throw new IllegalArgumentException(
-					"The function must be passed 2 arguments");
-		}
- 
-		String fragment = null;
-		String ftsConfig = null;
-		String field = null;
-		String value = null;
-		if(args.size() == 3) {
-			ftsConfig = (String) args.get(0);
-			field = (String) args.get(1);
-			value = (String) args.get(2);
-			fragment = field+" @@ to_tsquery("+ftsConfig+", "+value+")";
-		} else {
-			field = (String) args.get(0);
-			value = (String) args.get(1);
-			fragment = field+" @@ to_tsquery("+value+")";
-		}
-		return fragment;
-	}*/
-
+	
 	@Override
 	public org.hibernate.type.Type getReturnType(org.hibernate.type.Type arg0, Mapping arg1) throws QueryException {
 		return new BooleanType();
 	}
 
 	@Override
-	public String render(org.hibernate.type.Type arg0, List args, SessionFactoryImplementor factory)
+	public String render(org.hibernate.type.Type arg0, @SuppressWarnings("rawtypes") List args, SessionFactoryImplementor factory)
 			throws QueryException {
 		if (args!= null && args.size() < 2) {
 			throw new IllegalArgumentException(
