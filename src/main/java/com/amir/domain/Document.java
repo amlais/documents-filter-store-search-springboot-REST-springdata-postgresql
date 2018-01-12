@@ -27,7 +27,7 @@ public class Document {
     public Document(Long id, String name, String file) {
     	super();
 		this.id = id;
-		this.docName = docName;
+		this.docName = name;
 		this.file = file;
 	}
     public Long getId() {

@@ -50,8 +50,12 @@ public class DocumentServiceImpl implements DocumentService {
         return (List<Document>) documentDao.findAll();
     }
     @Override
-    public void deleteById(Long id){
+    public ResponseMetadata deleteById(Long id){
     	documentDao.delete(id);
+    	ResponseMetadata metadata = new ResponseMetadata();
+        metadata.setMessage("success");
+        metadata.setStatus(200);
+        return metadata;
     }
 
 	@Override

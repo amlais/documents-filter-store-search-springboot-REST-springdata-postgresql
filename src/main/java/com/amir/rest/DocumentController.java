@@ -9,7 +9,6 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,9 +36,8 @@ public class DocumentController {
     }
     
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public HttpEntity<String> getDocument(@PathVariable Long id) {
-        HttpHeaders httpHeaders = new HttpHeaders();
-        return new ResponseEntity<String>(documentService.getDocumentFile(id), httpHeaders, HttpStatus.OK);
+    public String getDocument(@PathVariable Long id) {
+        return documentService.getDocumentFile(id);
     }
     
     @RequestMapping(method = RequestMethod.GET)
@@ -49,12 +47,9 @@ public class DocumentController {
     
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
     public @ResponseBody ResponseMetadata deleteDocument(@PathVariable Long id){
-    	 documentService.deleteById(id);
-         ResponseMetadata metadata = new ResponseMetadata();
-         metadata.setMessage("success");
-         metadata.setStatus(200);
-         return metadata;
+    	 return documentService.deleteById(id);
     }
+    
     @RequestMapping(value = "/search/{searchQuery}/", method = RequestMethod.GET)
     public @ResponseBody List<Document> fulltextSearch(@PathVariable String searchQuery){
     	return documentService.fulltextSearch(searchQuery);

@@ -20,5 +20,5 @@ public interface DocumentService {
 
     List<Document> findAll();
 
-	void deleteById(Long id);
+	ResponseMetadata deleteById(Long id);
 }
