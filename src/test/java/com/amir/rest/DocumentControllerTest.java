@@ -24,8 +24,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import com.amir.domain.Document;
 import com.amir.service.DocumentService;
 import com.amir.service.ResponseMetadata;
@@ -103,25 +104,24 @@ public class DocumentControllerTest {
 		String expected = "{\"status\":200,\"message\":\"success\",\"data\":null}";
 		assertEquals("The expected String doesn't matchwith WS deleteById return", expected, (result.getResponse().getContentAsString()));
 	}
-	/**
 	@Test
 	public void saveDoc() throws Exception {
-		MockMultipartFile file = new MockMultipartFile("doc", "filename.docx", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "some text to be loaded".getBytes());
-		
+		MockMultipartFile file = new MockMultipartFile("doc", "filename.pdf", "application/pdf", "some text to be loaded".getBytes());
 		Mockito.when(
 				documentService.save(file)).thenReturn(mockResp);
 
-		RequestBuilder requestBuilder = MockMvcRequestBuilders
-				.fileUpload("/doc/upload")
-				.file(file)
-				.contentType("application/x-www-form-urlencoded")
+		RequestBuilder requestBuilder =  MockMvcRequestBuilders
+				.post("/doc/upload")
+				.requestAttr("file", file)
+				.contentType(MediaType.MULTIPART_FORM_DATA)
 				.accept(MediaType.APPLICATION_JSON_UTF8);
+//				.fileUpload("/doc/upload")
+//				.file(file)
+//				.accept(MediaType.APPLICATION_JSON_UTF8);
 		
-		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
-		String expected = "{\"status\":200,\"message\":\"success\",\"data\":null}";
-		assertEquals("The expected String doesn't matchwith WS saveDoc return", expected, (result.getResponse().getContentAsString()));
+		ResultActions result = mockMvc.perform(requestBuilder).andExpect(org.springframework.test.web.servlet.result.MockMvcResultMatchers.status().isCreated());
+		
 	}
-	*/
 	@Test
 	public void fulltextSearch() throws Exception {
 		
