@@ -11,10 +11,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.xml.sax.SAXException;
@@ -30,8 +32,10 @@ public class DocumentController {
     
     @Autowired
     DocumentService documentService;
-    @RequestMapping(value = "/upload", method = RequestMethod.POST)
-    public @ResponseBody ResponseMetadata handleFileUpload(@RequestParam(value="file") MultipartFile file) throws IOException, SAXException, TikaException {
+    
+    @RequestMapping(value = "/upload", method = RequestMethod.POST, consumes = "multipart/form-data")
+    @ResponseStatus(HttpStatus.CREATED)
+    public @ResponseBody ResponseMetadata handleFileUpload(@RequestAttribute(value="file") MultipartFile file) throws IOException, SAXException, TikaException {
         return documentService.save(file);
     }
     
