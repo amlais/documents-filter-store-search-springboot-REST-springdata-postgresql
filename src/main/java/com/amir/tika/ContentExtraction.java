@@ -8,7 +8,6 @@ import org.apache.tika.Tika;
 import org.apache.tika.exception.TikaException;
 import org.apache.tika.io.TikaInputStream;
 import org.springframework.web.multipart.MultipartFile;
-import org.xml.sax.SAXException;
 
 /**
  * Content Extraction permet l'extraction du contenu 
@@ -16,10 +15,10 @@ import org.xml.sax.SAXException;
  * en utilisant Apache Tika content Analysis toolkit
  */
 public class ContentExtraction {
-	public static List<String> strings = new ArrayList<String>();
+	public final List<String> strings = new ArrayList<>();
 	
 	
-	public String getContent(MultipartFile file)throws IOException, SAXException, TikaException{
+	public String getContent(MultipartFile file)throws IOException, TikaException{
 	    //Instantiating tika facade class 
 		strings.add("application/pdf");
 		strings.add("application/vnd.openxmlformats-officedocument.wordprocessingml.document");
