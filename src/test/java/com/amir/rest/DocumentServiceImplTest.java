@@ -62,6 +62,7 @@ public class DocumentServiceImplTest {
 	      .thenReturn(docs);
 		Mockito.when( DocumentDaoMock.findBySearchQuery("big data"))
 				.thenReturn(docs);
+		Mockito.doNothing().when( DocumentDaoMock).delete(1L);
 	}
 	
 	@Test
@@ -75,22 +76,34 @@ public class DocumentServiceImplTest {
 	public void saveTest() throws IOException, SAXException, TikaException{
 		ResponseMetadata respSave = null;
 		MockMultipartFile file = new MockMultipartFile("doc", "filename.pdf", "application/pdf", "some text to be loaded".getBytes());
-		Document doc= new Document(1L, "mochTitle.docx", "mockText big data");
 		respSave = DocumentService.save(file);
 		assertTrue(respSave.getStatus()==200 && respSave.getMessage()=="success");
 	}
 	
 	@Test
 	public void getDocumentFileTest(){
-		
+		String expectedContent = "mockText big data";
+		String fileContent = DocumentService.getDocumentFile(1L);
+		assertEquals(expectedContent, fileContent);
 	}
 	
 	@Test
 	public void findAllTest(){
-		
+		List<Document> expectedDocs = new ArrayList<>(
+			    Arrays.asList(new Document(1L, "mockTitle.docx", "mockText big data")));
+		List<Document> returnedDocs = DocumentService.findAll();
+		//System.out.println("expectedDocs has:" + expectedDocs);
+	    //System.out.println("returnedDocs has:" + returnedDocs);
+		//assertTrue(expectedDocs.equals(returnedDocs));
+		assertEquals(expectedDocs.get(0).getId(), returnedDocs.get(0).getId());
+		assertEquals(expectedDocs.get(0).getDocName(), returnedDocs.get(0).getDocName());
+		assertEquals(expectedDocs.get(0).getFile(), returnedDocs.get(0).getFile());
+		assertEquals(expectedDocs.size(), returnedDocs.size());
 	}
 	@Test
 	public void deleteByIdTest(){
-		
+		ResponseMetadata respSave = null;
+		respSave = DocumentService.deleteById(1L);
+		assertTrue(respSave.getStatus()==200 && respSave.getMessage()=="success");
 	}
 }
