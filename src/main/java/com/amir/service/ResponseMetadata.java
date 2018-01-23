@@ -36,4 +36,11 @@ public class ResponseMetadata {
     public void setData(Object data) {
         this.data = data;
     }
+    
+    public boolean equals(Object obj) {
+        return (obj instanceof ResponseMetadata) && 
+  	  ((ResponseMetadata)obj).getStatus()== status && 
+  	  ((ResponseMetadata)obj).getMessage().equals(message) &&
+  	  ((ResponseMetadata)obj).getMessage().equals(data);
+    }
 }
