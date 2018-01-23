@@ -2,6 +2,7 @@ package com.amir.tika;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.tika.Tika;
@@ -15,13 +16,11 @@ import org.springframework.web.multipart.MultipartFile;
  * en utilisant Apache Tika content Analysis toolkit
  */
 public class ContentExtraction {
-	public final List<String> strings = new ArrayList<>();
-	
+	public final List<String> strings = new ArrayList<>(
+		    Arrays.asList("application/pdf", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "text/plain"));
 	
 	public String getContent(MultipartFile file)throws IOException, TikaException{
 	    //Instantiating tika facade class 
-		strings.add("application/pdf");
-		strings.add("application/vnd.openxmlformats-officedocument.wordprocessingml.document");
 	    Tika tika = new Tika();
 	    //detecting the file type using detect method
 	    String filetype;
