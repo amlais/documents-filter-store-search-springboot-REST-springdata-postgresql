@@ -1,17 +1,22 @@
 package com.amir.rest;
 
 import com.amir.service.DocumentService;
+import com.amir.service.ResponseMetadata;
 
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Stream.of;
 import static org.junit.Assert.*;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.tika.exception.TikaException;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
+import org.springframework.mock.web.MockMultipartFile;
+import org.xml.sax.SAXException;
 import org.junit.runner.RunWith;
 import com.amir.dao.DocumentDao;
 import com.amir.domain.Document;
@@ -36,8 +41,15 @@ public class DocumentServiceTest {
 	}
 	
 	@Test
-	public void saveTest(){
-		
+	public void saveTest() throws IOException, SAXException, TikaException{
+		ResponseMetadata resp = new ResponseMetadata(200, "success", null);
+		ResponseMetadata respSave = new ResponseMetadata();
+		MockMultipartFile file = new MockMultipartFile("doc", "filename.pdf", "application/pdf", "some text to be loaded".getBytes());
+		Document doc= new Document(1L, "mochTitle.docx", "mockText big data");
+		Mockito.when(
+				DocumentDaoMock.save(doc)).thenReturn(doc);
+		respSave = DocumentService.save(file);
+		assertTrue(resp.equals(respSave));
 	}
 	
 	@Test
