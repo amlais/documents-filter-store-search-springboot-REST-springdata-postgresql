@@ -1,4 +1,4 @@
-package com.amir.rest;
+package com.amir.service;
 
 import com.amir.service.DocumentService;
 import com.amir.service.ResponseMetadata;
