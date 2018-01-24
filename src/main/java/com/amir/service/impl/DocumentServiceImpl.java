@@ -61,7 +61,7 @@ public class DocumentServiceImpl implements DocumentService {
 	@Override
 	public List<Document> fulltextSearch(String searchQuery) {
 		
-		return documentDao.findBySearchQuery(searchQuery);
+		return documentDao.findByFileContainsAllIgnoreCase(searchQuery);
 	}
 
 }
