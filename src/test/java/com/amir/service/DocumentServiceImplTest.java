@@ -4,23 +4,18 @@ import com.amir.service.DocumentService;
 import com.amir.service.ResponseMetadata;
 import com.amir.service.impl.DocumentServiceImpl;
 
-import static java.util.stream.Collectors.toList;
-import static java.util.stream.Stream.of;
 import static org.junit.Assert.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 import org.apache.tika.exception.TikaException;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
-import org.mockito.stubbing.OngoingStubbing;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
@@ -60,7 +55,7 @@ public class DocumentServiceImplTest {
 	      .thenReturn(doc);
 		Mockito.when(DocumentDaoMock.findAll())
 	      .thenReturn(docs);
-		Mockito.when( DocumentDaoMock.findBySearchQuery("big data"))
+		Mockito.when( DocumentDaoMock.findByFileContainsAllIgnoreCase("big data"))
 				.thenReturn(docs);
 		Mockito.doNothing().when( DocumentDaoMock).delete(1L);
 	}
