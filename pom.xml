@@ -66,6 +66,22 @@
     		<artifactId>tika-parsers</artifactId>
     		<version>1.17</version>
 		</dependency>
+		<!-- Maven artifact identifier for Hibernate Search -->
+   		<dependency>
+			<groupId>org.hibernate</groupId>
+      		<artifactId>hibernate-search-orm</artifactId>
+      		<version>4.5.1.Final</version>
+   		</dependency>
+   		<dependency>
+    		<groupId>org.hibernate</groupId>
+    		<artifactId>hibernate-entitymanager</artifactId>
+    		<version>5.2.3.Final</version>
+		</dependency>
+   		<dependency>
+    		<groupId>org.apache.lucene</groupId>
+   			<artifactId>lucene-core</artifactId>
+    		<version>5.0.0</version>
+		</dependency>
 		<!--<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>

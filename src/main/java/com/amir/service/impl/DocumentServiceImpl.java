@@ -3,9 +3,17 @@ package com.amir.service.impl;
 import java.io.IOException;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
+import org.apache.lucene.search.Query;
+import org.apache.lucene.util.QueryBuilder;
 import org.apache.tika.exception.TikaException;
+import org.hibernate.search.jpa.FullTextEntityManager;
+import org.hibernate.search.jpa.Search;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.xml.sax.SAXException;
 
@@ -21,6 +29,12 @@ public class DocumentServiceImpl implements DocumentService {
 	@Autowired
     private DocumentDao documentDao;
 	
+	@PersistenceContext
+    private EntityManager em;
+	
+	 /** Hibernate Full Text Entity Manager. */
+    private FullTextEntityManager ftem;
+    
 	@Override
     public ResponseMetadata save(MultipartFile file) throws IOException, SAXException, TikaException {
     	Document doc = new Document();
@@ -59,9 +73,27 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
 	@Override
-	public List<Document> fulltextSearch(String searchQuery) {
+	public List<Document> search(String searchQuery) {
 		
 		return documentDao.findByFileContainsAllIgnoreCase(searchQuery);
+	}
+
+	@Override
+	@Transactional
+	public List<Document> fulltextSearch(String searchString) {
+		
+		if (ftem == null) {
+            ftem = Search.getFullTextEntityManager(em);
+        }
+		// Create a Query Builder
+        QueryBuilder qb = (QueryBuilder) ftem.getSearchFactory().buildQueryBuilder().forEntity(Document.class).get();
+        // Create a Lucene Full Text Query
+        org.apache.lucene.search.Query luceneQuery = ((org.hibernate.search.query.dsl.QueryBuilder) qb).bool()
+                .must((Query) ((org.hibernate.search.query.dsl.QueryBuilder) qb).keyword()
+                		.onFields("file").matching(searchString)).createQuery();
+        Query fullTextQuery = (Query) ftem.createFullTextQuery(luceneQuery, Document.class);
+        // Run Query and print out results to console
+        return (List<Document>) ( (javax.persistence.Query) fullTextQuery).getResultList();
 	}
 
 }
