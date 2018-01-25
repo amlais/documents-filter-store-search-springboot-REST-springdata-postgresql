@@ -7,7 +7,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
 @Entity
+@Indexed
 @Table (name="document")
 public class Document {
 
@@ -21,6 +24,7 @@ public class Document {
 //    @Column
 //    @Type(type="text")
     @Column(length=10485760)
+    @Field
     private String file;
     public Document() {
 	}
