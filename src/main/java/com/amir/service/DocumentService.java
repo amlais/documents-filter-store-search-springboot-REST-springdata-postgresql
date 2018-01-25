@@ -12,7 +12,7 @@ import com.amir.domain.Document;
 
 @Transactional
 public interface DocumentService {
-	List<Document> fulltextSearch(String searchQuery);
+	List<Document> search(String searchQuery);
 
     ResponseMetadata save(MultipartFile multipartFile) throws IOException, SAXException, TikaException;
 
@@ -21,4 +21,6 @@ public interface DocumentService {
     List<Document> findAll();
 
 	ResponseMetadata deleteById(Long id);
+	
+	List<Document> fulltextSearch(String searchQuery);
 }
