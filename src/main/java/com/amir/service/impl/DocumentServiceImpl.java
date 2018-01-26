@@ -25,16 +25,9 @@ import com.amir.tika.ContentExtraction;
 
 @Service
 public class DocumentServiceImpl implements DocumentService {
-    
 	@Autowired
     private DocumentRepository documentRepository;
 	
-	@PersistenceContext
-    private EntityManager em;
-	
-	 /** Hibernate Full Text Entity Manager. */
-    private FullTextEntityManager ftem;
-    
 	@Override
     public ResponseMetadata save(MultipartFile file) throws IOException, SAXException, TikaException {
     	Document doc = new Document();
@@ -79,21 +72,8 @@ public class DocumentServiceImpl implements DocumentService {
 	}
 
 	@Override
-	@Transactional
-	public List<Document> fulltextSearch(String searchString) {
-		
-		if (ftem == null) {
-            ftem = Search.getFullTextEntityManager(em);
-        }
-		// Create a Query Builder
-        QueryBuilder qb = (QueryBuilder) ftem.getSearchFactory().buildQueryBuilder().forEntity(Document.class).get();
-        // Create a Lucene Full Text Query
-        org.apache.lucene.search.Query luceneQuery = ((org.hibernate.search.query.dsl.QueryBuilder) qb).bool()
-                .must((Query) ((org.hibernate.search.query.dsl.QueryBuilder) qb).keyword()
-                		.onFields("file").matching(searchString)).createQuery();
-        Query fullTextQuery = (Query) ftem.createFullTextQuery(luceneQuery, Document.class);
-        // Run Query and print out results to console
-        return (List<Document>) ( (javax.persistence.Query) fullTextQuery).getResultList();
+	public List<Document> fulltextSearch(String searchQuery) {
+		return documentRepository.fulltextSearch(searchQuery);
 	}
 
 }
