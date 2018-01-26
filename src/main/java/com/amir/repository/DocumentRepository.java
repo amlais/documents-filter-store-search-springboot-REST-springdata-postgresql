@@ -1,4 +1,4 @@
-package com.amir.dao;
+package com.amir.repository;
 
 import java.util.List;
 
@@ -10,7 +10,7 @@ import com.amir.domain.Document;
 
 @Repository
 @Transactional
-public interface DocumentDao extends CrudRepository<Document, Long>{
+public interface DocumentRepository extends CrudRepository<Document, Long>{
 
 	public List<Document>findByFileContainsAllIgnoreCase(String filePart);
 	public void delete(Long id);
