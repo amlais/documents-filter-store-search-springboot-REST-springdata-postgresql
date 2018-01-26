@@ -23,7 +23,7 @@ import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.xml.sax.SAXException;
 import org.junit.runner.RunWith;
-import com.amir.dao.DocumentDao;
+import com.amir.repository.DocumentRepository;
 import com.amir.domain.Document;
 
 @RunWith(SpringRunner.class)
@@ -41,7 +41,7 @@ public class DocumentServiceImplTest {
     private DocumentService DocumentService;
  
     @MockBean
-    private DocumentDao DocumentDaoMock;
+    private DocumentRepository DocumentDaoMock;
     
 	
 	@Before
