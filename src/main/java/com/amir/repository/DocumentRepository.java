@@ -10,9 +10,8 @@ import com.amir.domain.Document;
 
 @Repository
 @Transactional
-public interface DocumentRepository extends CrudRepository<Document, Long>{
+public interface DocumentRepository extends CrudRepository <Document, Long>, DocumentRepositoryCustom{
 
-	public List<Document>findByFileContainsAllIgnoreCase(String filePart);
+	public List<Document> findByFileContainsAllIgnoreCase(String filePart);
 	public void delete(Long id);
-
 }
