@@ -16,6 +16,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
@@ -23,8 +24,8 @@ import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.xml.sax.SAXException;
 import org.junit.runner.RunWith;
-import com.amir.repository.DocumentRepository;
 import com.amir.domain.Document;
+import com.amir.domain.DocumentDao;
 
 @RunWith(SpringRunner.class)
 public class DocumentServiceImplTest {
@@ -41,7 +42,7 @@ public class DocumentServiceImplTest {
     private DocumentService DocumentService;
  
     @MockBean
-    private DocumentRepository DocumentDaoMock;
+    private DocumentDao DocumentDaoMock;
     
 	
 	@Before
