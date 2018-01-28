@@ -4,13 +4,11 @@ import java.io.IOException;
 import java.util.List;
 
 import org.apache.tika.exception.TikaException;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.xml.sax.SAXException;
 
 import com.amir.domain.Document;
 
-@Transactional
 public interface DocumentService {
 	List<Document> search(String searchQuery);
 
