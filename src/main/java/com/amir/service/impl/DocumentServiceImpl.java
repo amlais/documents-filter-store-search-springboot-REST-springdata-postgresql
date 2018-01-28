@@ -3,22 +3,14 @@ package com.amir.service.impl;
 import java.io.IOException;
 import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
-import org.apache.lucene.search.Query;
-import org.apache.lucene.util.QueryBuilder;
 import org.apache.tika.exception.TikaException;
-import org.hibernate.search.jpa.FullTextEntityManager;
-import org.hibernate.search.jpa.Search;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.xml.sax.SAXException;
 
-import com.amir.repository.DocumentRepository;
 import com.amir.domain.Document;
+import com.amir.domain.DocumentDao;
 import com.amir.service.DocumentService;
 import com.amir.service.ResponseMetadata;
 import com.amir.tika.ContentExtraction;
@@ -26,7 +18,7 @@ import com.amir.tika.ContentExtraction;
 @Service
 public class DocumentServiceImpl implements DocumentService {
 	@Autowired
-    private DocumentRepository documentRepository;
+    private DocumentDao documentDao;
 	
 	@Override
     public ResponseMetadata save(MultipartFile file) throws IOException, SAXException, TikaException {
@@ -37,7 +29,7 @@ public class DocumentServiceImpl implements DocumentService {
 		if(c != "Invalid content"){
 			doc.setDocName(file.getOriginalFilename());
 			doc.setFile(c);
-			documentRepository.save(doc);
+			documentDao.save(doc);
 	        metadata.setMessage("success");
 	        metadata.setStatus(200);
 		}else{
@@ -49,16 +41,16 @@ public class DocumentServiceImpl implements DocumentService {
 
     @Override
     public String getDocumentFile(Long id) {
-      return documentRepository.findOne(id).getFile();
+      return documentDao.findOne(id).getFile();
     }
 
     @Override
     public List<Document> findAll() {
-        return (List<Document>) documentRepository.findAll();
+        return (List<Document>) documentDao.findAll();
     }
     @Override
     public ResponseMetadata deleteById(Long id){
-    	documentRepository.delete(id);
+    	documentDao.delete(id);
     	ResponseMetadata metadata = new ResponseMetadata();
         metadata.setMessage("success");
         metadata.setStatus(200);
@@ -68,12 +60,12 @@ public class DocumentServiceImpl implements DocumentService {
 	@Override
 	public List<Document> search(String searchQuery) {
 		
-		return documentRepository.findByFileContainsAllIgnoreCase(searchQuery);
+		return documentDao.findByFileContainsAllIgnoreCase(searchQuery);
 	}
 
 	@Override
 	public List<Document> fulltextSearch(String searchQuery) {
-		return documentRepository.fulltextSearch(searchQuery);
+		return documentDao.fulltextSearch(searchQuery);
 	}
 
 }
