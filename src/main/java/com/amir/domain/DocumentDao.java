@@ -10,7 +10,7 @@ import com.amir.domain.Document;
 
 @Transactional(readOnly=true)
 @Repository
-public interface DocumentDao extends CrudRepository <Document, Long>, DocumentDaoCustom{
+public interface DocumentDao extends CrudRepository <Document, Long>{
 
 	public List<Document> findByFileContainsAllIgnoreCase(String filePart);
 	public void delete(Long id);
