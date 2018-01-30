@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.xml.sax.SAXException;
 
 import com.amir.domain.Document;
+import com.amir.domain.ElasticDocument;
 
 public interface DocumentService {
 	List<Document> search(String searchQuery);
@@ -19,4 +20,6 @@ public interface DocumentService {
     List<Document> findAll();
 
 	ResponseMetadata deleteById(Long id);
+
+	List<ElasticDocument> fulltextSearch(String searchQuery);
 }
