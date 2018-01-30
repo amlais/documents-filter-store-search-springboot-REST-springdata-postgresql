@@ -10,7 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.xml.sax.SAXException;
 
 import com.amir.domain.Document;
-import com.amir.domain.DocumentDao;
+import com.amir.repository.DocumentRepository;
 import com.amir.service.DocumentService;
 import com.amir.service.ResponseMetadata;
 import com.amir.tika.ContentExtraction;
@@ -18,7 +18,7 @@ import com.amir.tika.ContentExtraction;
 @Service
 public class DocumentServiceImpl implements DocumentService {
 	@Autowired
-    private DocumentDao documentDao;
+    private DocumentRepository documentRepository;
 	
 	@Override
     public ResponseMetadata save(MultipartFile file) throws IOException, SAXException, TikaException {
@@ -29,7 +29,7 @@ public class DocumentServiceImpl implements DocumentService {
 		if(c != "Invalid content"){
 			doc.setDocName(file.getOriginalFilename());
 			doc.setFile(c);
-			documentDao.save(doc);
+			documentRepository.save(doc);
 	        metadata.setMessage("success");
 	        metadata.setStatus(200);
 		}else{
@@ -41,16 +41,16 @@ public class DocumentServiceImpl implements DocumentService {
 
     @Override
     public String getDocumentFile(Long id) {
-      return documentDao.findOne(id).getFile();
+      return documentRepository.findOne(id).getFile();
     }
 
     @Override
     public List<Document> findAll() {
-        return (List<Document>) documentDao.findAll();
+        return (List<Document>) documentRepository.findAll();
     }
     @Override
     public ResponseMetadata deleteById(Long id){
-    	documentDao.delete(id);
+    	documentRepository.delete(id);
     	ResponseMetadata metadata = new ResponseMetadata();
         metadata.setMessage("success");
         metadata.setStatus(200);
@@ -60,12 +60,7 @@ public class DocumentServiceImpl implements DocumentService {
 	@Override
 	public List<Document> search(String searchQuery) {
 		
-		return documentDao.findByFileContainsAllIgnoreCase(searchQuery);
-	}
-
-	@Override
-	public List<Document> fulltextSearch(String searchQuery) {
-		return documentDao.fulltextSearch(searchQuery);
+		return documentRepository.findByFileContainsAllIgnoreCase(searchQuery);
 	}
 
 }
