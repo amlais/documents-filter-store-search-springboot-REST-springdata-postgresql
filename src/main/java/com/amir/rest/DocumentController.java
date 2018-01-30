@@ -54,4 +54,9 @@ public class DocumentController {
     public @ResponseBody List<Document> search(@PathVariable String searchQuery){
     	return documentService.search(searchQuery);
     }
+    
+    @RequestMapping(value = "/fulltextsearch/{searchQuery}/", method = RequestMethod.GET)
+    public @ResponseBody List<Document> fulltextsearch(@PathVariable String searchQuery){
+    	return documentService.search(searchQuery);
+    }
 }
