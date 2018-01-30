@@ -12,6 +12,6 @@ public interface ElasticDocumentRepository extends ElasticsearchRepository<Elast
 
     //Page<ElasticDocument> findByFile(String searchQuery, Pageable pageable);
 
-    List<ElasticDocument> findByFile(String searchQuery);
+    List<ElasticDocument> findByFileContainingAllIgnoreCase(String searchQuery);
 
 }
