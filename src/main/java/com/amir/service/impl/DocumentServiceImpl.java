@@ -10,26 +10,36 @@ import org.springframework.web.multipart.MultipartFile;
 import org.xml.sax.SAXException;
 
 import com.amir.domain.Document;
+import com.amir.domain.ElasticDocument;
 import com.amir.repository.DocumentRepository;
+import com.amir.repository.ElasticDocumentRepository;
 import com.amir.service.DocumentService;
 import com.amir.service.ResponseMetadata;
 import com.amir.tika.ContentExtraction;
 
 @Service
 public class DocumentServiceImpl implements DocumentService {
+	
 	@Autowired
     private DocumentRepository documentRepository;
+	
+	@Autowired
+	private ElasticDocumentRepository elasticDocumentRepository;
 	
 	@Override
     public ResponseMetadata save(MultipartFile file) throws IOException, SAXException, TikaException {
     	Document doc = new Document();
+    	ElasticDocument elasticDocument = new ElasticDocument();
     	ResponseMetadata metadata = new ResponseMetadata();
     	ContentExtraction contentExtractor = new ContentExtraction();
 		String c = contentExtractor.getContent(file);
 		if(c != "Invalid content"){
 			doc.setDocName(file.getOriginalFilename());
+			elasticDocument.setDocName(file.getOriginalFilename());
 			doc.setFile(c);
+			elasticDocument.setFile(c);
 			documentRepository.save(doc);
+			elasticDocumentRepository.save(elasticDocument);
 	        metadata.setMessage("success");
 	        metadata.setStatus(200);
 		}else{
@@ -61,6 +71,11 @@ public class DocumentServiceImpl implements DocumentService {
 	public List<Document> search(String searchQuery) {
 		
 		return documentRepository.findByFileContainsAllIgnoreCase(searchQuery);
+	}
+	
+	@Override
+	public List<ElasticDocument> fulltextSearch(String searchQuery) {
+		return elasticDocumentRepository.findByFileContainingAllIgnoreCase(searchQuery);
 	}
 
 }
