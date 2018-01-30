@@ -19,6 +19,4 @@ public interface DocumentService {
     List<Document> findAll();
 
 	ResponseMetadata deleteById(Long id);
-	
-	List<Document> fulltextSearch(String searchQuery);
 }
