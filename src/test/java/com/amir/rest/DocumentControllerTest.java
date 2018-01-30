@@ -117,10 +117,10 @@ public class DocumentControllerTest {
 		
 	}
 	@Test
-	public void fulltextSearch() throws Exception {
+	public void search() throws Exception {
 		
 		Mockito.when(
-				documentService.fulltextSearch("mockTextFileContent")).thenReturn(mockdocumentsList2);
+				documentService.search("mockTextFileContent")).thenReturn(mockdocumentsList2);
 
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.get(
 				"/doc/search/mockTextFileContent/").accept(
