@@ -25,7 +25,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.xml.sax.SAXException;
 import org.junit.runner.RunWith;
 import com.amir.domain.Document;
-import com.amir.domain.DocumentDao;
+import com.amir.repository.DocumentRepository;
 
 @RunWith(SpringRunner.class)
 public class DocumentServiceImplTest {
@@ -42,7 +42,7 @@ public class DocumentServiceImplTest {
     private DocumentService DocumentService;
  
     @MockBean
-    private DocumentDao DocumentDaoMock;
+    private DocumentRepository DocumentRepositoryMock;
     
 	
 	@Before
@@ -50,21 +50,21 @@ public class DocumentServiceImplTest {
 		Document doc = new Document(1L, "mockTitle.docx", "mockText big data");
 		List<Document> docs = new ArrayList<>(
 			    Arrays.asList(doc));
-		Mockito.when(DocumentDaoMock.save(doc))
+		Mockito.when(DocumentRepositoryMock.save(doc))
 	      .thenReturn(doc);
-		Mockito.when(DocumentDaoMock.findOne(doc.getId()))
+		Mockito.when(DocumentRepositoryMock.findOne(doc.getId()))
 	      .thenReturn(doc);
-		Mockito.when(DocumentDaoMock.findAll())
+		Mockito.when(DocumentRepositoryMock.findAll())
 	      .thenReturn(docs);
-		Mockito.when( DocumentDaoMock.findByFileContainsAllIgnoreCase("big data"))
+		Mockito.when( DocumentRepositoryMock.findByFileContainsAllIgnoreCase("big data"))
 				.thenReturn(docs);
-		Mockito.doNothing().when( DocumentDaoMock).delete(1L);
+		Mockito.doNothing().when( DocumentRepositoryMock).delete(1L);
 	}
 	
 	@Test
-	public void fulltextSearchTest(){
+	public void searchTest(){
 		Document doc = new Document(1L, "mockTitle.docx", "mockText big data");
-		List<Document> listDocs = DocumentService.fulltextSearch("big data");
+		List<Document> listDocs = DocumentService.search("big data");
 		assertEquals(listDocs.get(0).getDocName(), doc.getDocName());
 	}
 	
