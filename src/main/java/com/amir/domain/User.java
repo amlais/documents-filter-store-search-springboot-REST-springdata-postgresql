@@ -31,6 +31,13 @@ public class User {
 		this.roles = roles;
 	}
 	
+	public User(User user) {
+		this.username = user.getUsername();
+		this.password = user.getPassword();
+		this.roles = user.getRoles();
+		// TODO Auto-generated constructor stub
+	}
+
 	public String getUsername(){ return username;}
 	public void setUsername(String username){ this.username=username;}
 	public String getPassword(){ return password;}
