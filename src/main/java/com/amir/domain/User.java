@@ -6,14 +6,17 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.persistence.Id;
 
 @Entity
+@Table(name="users")
 public class User {
 	
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private Long id;
 	private String username;
 	private String password;
