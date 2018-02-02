@@ -21,7 +21,6 @@ import com.amir.domain.Document;
 import com.amir.service.DocumentService;
 import com.amir.service.ResponseMetadata;
 
-@CrossOrigin(origins="*")
 @RestController
 @RequestMapping(value = "/doc")
 public class DocumentController {
