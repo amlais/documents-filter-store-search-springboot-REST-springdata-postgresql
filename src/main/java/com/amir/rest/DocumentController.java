@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.tika.exception.TikaException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestAttribute;
@@ -28,22 +29,26 @@ public class DocumentController {
     @Autowired
     DocumentService documentService;
     
+    @PreAuthorize("hasAnyRole('USER')")
     @RequestMapping(value = "/upload", method = RequestMethod.POST, consumes = "multipart/form-data")
     @ResponseStatus(HttpStatus.CREATED)
     public @ResponseBody ResponseMetadata handleFileUpload(@RequestAttribute(value="file") MultipartFile file) throws IOException, SAXException, TikaException {
         return documentService.save(file);
     }
     
+    @PreAuthorize("hasAnyRole('USER')")
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public String getDocument(@PathVariable Long id) {
         return documentService.getDocumentFile(id);
     }
     
+    @PreAuthorize("hasAnyRole('USER')")
     @RequestMapping(method = RequestMethod.GET)
     public @ResponseBody List<Document> getDocument() {
         return documentService.findAll();
     }
     
+    @PreAuthorize("hasAnyRole('USER')")
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
     public @ResponseBody ResponseMetadata deleteDocument(@PathVariable Long id){
     	 return documentService.deleteById(id);
