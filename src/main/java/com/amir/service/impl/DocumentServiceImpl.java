@@ -12,7 +12,6 @@ import org.xml.sax.SAXException;
 import com.amir.domain.Document;
 import com.amir.domain.ElasticDocument;
 import com.amir.repository.DocumentRepository;
-import com.amir.repository.ElasticDocumentRepository;
 import com.amir.service.DocumentService;
 import com.amir.service.ResponseMetadata;
 import com.amir.tika.ContentExtraction;
@@ -22,9 +21,6 @@ public class DocumentServiceImpl implements DocumentService {
 	
 	@Autowired
     private DocumentRepository documentRepository;
-	
-	@Autowired
-	private ElasticDocumentRepository elasticDocumentRepository;
 	
 	@Override
     public ResponseMetadata save(MultipartFile file) throws IOException, SAXException, TikaException {
@@ -39,7 +35,6 @@ public class DocumentServiceImpl implements DocumentService {
 			doc.setFile(c);
 			elasticDocument.setFile(c);
 			documentRepository.save(doc);
-			elasticDocumentRepository.save(elasticDocument);
 	        metadata.setMessage("success");
 	        metadata.setStatus(200);
 		}else{
@@ -72,10 +67,4 @@ public class DocumentServiceImpl implements DocumentService {
 		
 		return documentRepository.findByFileContainsAllIgnoreCase(searchQuery);
 	}
-	
-	@Override
-	public List<ElasticDocument> fulltextSearch(String searchQuery) {
-		return elasticDocumentRepository.findByFileContainingAllIgnoreCase(searchQuery);
-	}
-
 }
