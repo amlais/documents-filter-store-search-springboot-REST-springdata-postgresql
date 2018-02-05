@@ -40,15 +40,16 @@ public class User {
 	public User(User user) {
 		this.username = user.getUsername();
 		this.password = user.getPassword();
+		this.lastName = user.getLastname();
+		this.active = user.getActive();
 		this.roles = user.getRoles();
-		// TODO Auto-generated constructor stub
 	}
 
 	public String getUsername(){ return username;}
 	public void setUsername(String username){ this.username=username;}
 	public String getPassword(){ return password;}
 	public void setPassword(String password){ this.password=password;}
-	public String getLastname(){ return username;}
+	public String getLastname(){ return lastName;}
 	public void setLastname(String lastname){ this.lastName=lastname;}
 	public int getActive(){ return active;}
 	public void setActive(int active){ this.active=active;}
