@@ -1,8 +1,12 @@
 package com.amir.domain;
 
 import java.util.Collection;
+import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 public class CustomUserDetails extends User implements UserDetails{
@@ -12,8 +16,10 @@ public class CustomUserDetails extends User implements UserDetails{
 	}
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		// TODO Auto-generated method stub
-		return null;
+		return getRoles()
+		.stream()
+		.map(role -> new SimpleGrantedAuthority("ROLE_" + role.getName()))
+		.collect(Collectors.toList());
 	}
 
 	@Override
