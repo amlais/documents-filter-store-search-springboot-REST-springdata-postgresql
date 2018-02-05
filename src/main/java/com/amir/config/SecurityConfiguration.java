@@ -3,12 +3,12 @@ package com.amir.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.security.authentication.encoding.PasswordEncoder;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.amir.repository.UserRepository;
 
@@ -24,7 +24,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception{
 		
 		auth.userDetailsService(userDetailsService)
-		.passwordEncoder(getPasswordEncoder());
+		.passwordEncoder(passwordEncoder());
 	}
 	
 	@Override
@@ -36,25 +36,29 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 		//.and().formLogin().permitAll();
 	}
 	
-	@SuppressWarnings("deprecation")
-	private PasswordEncoder getPasswordEncoder(){
-		return new PasswordEncoder(){
-			public String encode(CharSequence charSequence){
-				return charSequence.toString();
-			}
-			public boolean matches(CharSequence charSequence, String s){
-				return true;
-			}
-			@Override
-			public String encodePassword(String rawPass, Object salt) {
-				// TODO Auto-generated method stub
-				return null;
-			}
-			@Override
-			public boolean isPasswordValid(String encPass, String rawPass, Object salt) {
-				// TODO Auto-generated method stub
-				return false;
-			}
-		};
+	public BCryptPasswordEncoder passwordEncoder(){
+		return new BCryptPasswordEncoder();
 	}
+	
+//	@SuppressWarnings("deprecation")
+//	private PasswordEncoder getPasswordEncoder(){
+//		return new PasswordEncoder(){
+//			public String encode(CharSequence charSequence){
+//				return charSequence.toString();
+//			}
+//			public boolean matches(CharSequence charSequence, String s){
+//				return true;
+//			}
+//			@Override
+//			public String encodePassword(String rawPass, Object salt) {
+//				// TODO Auto-generated method stub
+//				return null;
+//			}
+//			@Override
+//			public boolean isPasswordValid(String encPass, String rawPass, Object salt) {
+//				// TODO Auto-generated method stub
+//				return false;
+//			}
+//		};
+//	}
 }
