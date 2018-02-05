@@ -47,12 +47,16 @@ public class User {
 
 	public String getUsername(){ return username;}
 	public void setUsername(String username){ this.username=username;}
+	
 	public String getPassword(){ return password;}
 	public void setPassword(String password){ this.password=password;}
+	
 	public String getLastname(){ return lastName;}
 	public void setLastname(String lastname){ this.lastName=lastname;}
+	
 	public int getActive(){ return active;}
 	public void setActive(int active){ this.active=active;}
+	
 	public List<Role> getRoles(){ return roles;}
 	public void setRoles(List<Role> roles){ this.roles=roles;}
 }
