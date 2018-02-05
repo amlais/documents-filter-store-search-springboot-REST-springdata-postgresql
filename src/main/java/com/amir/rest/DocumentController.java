@@ -42,7 +42,7 @@ public class DocumentController {
         return documentService.getDocumentFile(id);
     }
     
-    @PreAuthorize("hasAnyRole('USER')")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @RequestMapping(method = RequestMethod.GET)
     public @ResponseBody List<Document> getDocument() {
         return documentService.findAll();
