@@ -20,6 +20,4 @@ public interface DocumentService {
     List<Document> findAll();
 
 	ResponseMetadata deleteById(Long id);
-
-	List<ElasticDocument> fulltextSearch(String searchQuery);
 }
