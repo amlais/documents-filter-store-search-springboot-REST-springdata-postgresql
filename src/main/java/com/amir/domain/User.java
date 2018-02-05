@@ -3,6 +3,7 @@ package com.amir.domain;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -17,17 +18,22 @@ public class User {
 	
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
+	@Column(name="user_id")
 	private Long id;
 	private String username;
 	private String password;
+	private String lastName;
+	private int active;
 	@OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
 	private List<Role> roles;
 	
 	User(){}
 	
-	public User(String username, String password, List<Role> roles){
+	public User(String username, String password, String lastName, int active, List<Role> roles){
 		this.username =username;
 		this.password = password;
+		this.lastName = lastName;
+		this.active = active;
 		this.roles = roles;
 	}
 	
@@ -42,6 +48,10 @@ public class User {
 	public void setUsername(String username){ this.username=username;}
 	public String getPassword(){ return password;}
 	public void setPassword(String password){ this.password=password;}
+	public String getLastname(){ return username;}
+	public void setLastname(String lastname){ this.lastName=lastname;}
+	public int getActive(){ return active;}
+	public void setActive(int active){ this.active=active;}
 	public List<Role> getRoles(){ return roles;}
 	public void setRoles(List<Role> roles){ this.roles=roles;}
 }
