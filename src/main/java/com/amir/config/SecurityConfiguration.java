@@ -1,9 +1,11 @@
 package com.amir.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -19,10 +21,11 @@ import com.amir.repository.UserRepository;
 @EnableJpaRepositories(basePackageClasses = UserRepository.class)
 @Configuration
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
-	
+
 	@Autowired
 	private UserDetailsService userDetailsService;
-	
+	@Value("${security.encoding-strength}")
+	   private Integer encodingStrength;
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception{
 		/*
@@ -45,8 +48,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 		.and().formLogin().permitAll();
 	}
 	
-	public BCryptPasswordEncoder passwordEncoder(){
-		return new BCryptPasswordEncoder();
+	public ShaPasswordEncoder passwordEncoder(){
+		return new ShaPasswordEncoder(encodingStrength);
 	}
 	
 //	@SuppressWarnings("deprecation")
