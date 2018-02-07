@@ -24,16 +24,18 @@ public class User {
 	private String password;
 	private String lastName;
 	private int active;
+	private int accountNonLocked;
 	@OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
 	private List<Role> roles;
 	
 	User(){}
 	
-	public User(String username, String password, String lastName, int active, List<Role> roles){
+	public User(String username, String password, String lastName, int active, int accountNonLocked, List<Role> roles){
 		this.username =username;
 		this.password = password;
 		this.lastName = lastName;
 		this.active = active;
+		this.accountNonLocked = accountNonLocked;
 		this.roles = roles;
 	}
 	
@@ -42,6 +44,7 @@ public class User {
 		this.password = user.getPassword();
 		this.lastName = user.getLastname();
 		this.active = user.getActive();
+		this.accountNonLocked = user.getaccountNonLocked();
 		this.roles = user.getRoles();
 	}
 
@@ -53,6 +56,9 @@ public class User {
 	
 	public String getLastname(){ return lastName;}
 	public void setLastname(String lastname){ this.lastName=lastname;}
+	
+	public int getaccountNonLocked(){ return accountNonLocked;}
+	public void setaccountNonLocked(int accountNonLocked){ this.accountNonLocked=accountNonLocked;}
 	
 	public int getActive(){ return active;}
 	public void setActive(int active){ this.active=active;}
