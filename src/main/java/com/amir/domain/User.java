@@ -15,7 +15,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.JoinColumn;
 
 @Entity
-@Table(name="users")
 public class User {
 	
 	@Id
