@@ -18,7 +18,7 @@ public class CustomUserDetails extends User implements UserDetails{
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return getRoles()
 		.stream()
-		.map(role -> new SimpleGrantedAuthority(role.getName()))
+		.map(role -> new SimpleGrantedAuthority("ROLE_"+role.getName()))
 		.collect(Collectors.toList());
 	}
 
@@ -37,25 +37,25 @@ public class CustomUserDetails extends User implements UserDetails{
 	@Override
 	public boolean isAccountNonExpired() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean isAccountNonLocked() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean isCredentialsNonExpired() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean isEnabled() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 	
 }
