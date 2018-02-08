@@ -17,40 +17,22 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.amir.repository.UserRepository;
 
-@EnableGlobalMethodSecurity(prePostEnabled = true)
-@EnableWebSecurity
-@EnableJpaRepositories(basePackageClasses = UserRepository.class)
-@Configuration
-public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 
-	@Autowired
-	private UserDetailsService userDetailsService;
-	
-	@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception{
-		
-		  auth.inMemoryAuthentication().
-		  withUser("Peter").
-		  password("Peter").
-		  roles("USER");
-//		auth
-//		.userDetailsService(userDetailsService)
-//		.passwordEncoder(passwordEncoder());
-	}
+@Configuration
+@EnableWebSecurity
+public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable();
 		http.authorizeRequests()
-		.antMatchers("**/doc/**").authenticated()
-		.anyRequest().permitAll()
-		.and().formLogin().permitAll();
+		.antMatchers("/doc/**").authenticated();
 	}
 	
-	@Bean
-	public PasswordEncoder passwordEncoder(){
-		return new BCryptPasswordEncoder();
-	}
+//	@Bean
+//	public PasswordEncoder passwordEncoder(){
+//		return new BCryptPasswordEncoder();
+//	}
 	
 //	@SuppressWarnings("deprecation")
 //	private PasswordEncoder getPasswordEncoder(){
