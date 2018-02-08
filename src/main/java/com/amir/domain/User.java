@@ -12,23 +12,23 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.JoinColumn;
 
 @Entity
+@Table(name="users")
 public class User {
 	
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
-	@Column(name="user_id")
 	private Long id;
 	private String username;
 	private String password;
 	private String lastName;
 	private int active;
 	private int accountNonLocked;
-	@OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
-	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-	private List<Role> roles;
+	@ManyToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
+	private List<Role> role;
 	
 	User(){}
 	
@@ -38,7 +38,7 @@ public class User {
 		this.lastName = lastName;
 		this.active = active;
 		this.accountNonLocked = accountNonLocked;
-		this.roles = roles;
+		this.role = roles;
 	}
 	
 	public User(User user) {
@@ -47,7 +47,7 @@ public class User {
 		this.lastName = user.getLastname();
 		this.active = user.getActive();
 		this.accountNonLocked = user.getaccountNonLocked();
-		this.roles = user.getRoles();
+		this.role = user.getRoles();
 	}
 
 	public String getUsername(){ return username;}
@@ -65,6 +65,6 @@ public class User {
 	public int getActive(){ return active;}
 	public void setActive(int active){ this.active=active;}
 	
-	public List<Role> getRoles(){ return roles;}
-	public void setRoles(List<Role> roles){ this.roles=roles;}
+	public List<Role> getRoles(){ return role;}
+	public void setRoles(List<Role> roles){ this.role=roles;}
 }
