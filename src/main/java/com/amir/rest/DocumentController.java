@@ -40,7 +40,7 @@ public class DocumentController {
         return documentService.getDocumentFile(id);
     }
     
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "/", method = RequestMethod.GET)
     public @ResponseBody List<Document> getDocument() {
         return documentService.findAll();
     }
