@@ -19,7 +19,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.xml.sax.SAXException;
 
 import com.amir.domain.Document;
+import com.amir.domain.ElasticDocument;
 import com.amir.service.DocumentService;
+import com.amir.service.ElasticDocumentService;
 import com.amir.service.ResponseMetadata;
 
 @RestController
@@ -28,7 +30,8 @@ public class DocumentController {
     
     @Autowired
     DocumentService documentService;
-    
+    @Autowired
+    ElasticDocumentService elasticDocumentService;
     @RequestMapping(value = "/upload", method = RequestMethod.POST, consumes = "multipart/form-data")
     @ResponseStatus(HttpStatus.CREATED)
     public @ResponseBody ResponseMetadata handleFileUpload(@RequestAttribute(value="file") MultipartFile file) throws IOException, SAXException, TikaException {
@@ -56,7 +59,7 @@ public class DocumentController {
     }
     
     @RequestMapping(value = "/fulltextsearch/{searchQuery}/", method = RequestMethod.GET)
-    public @ResponseBody List<Document> fulltextsearch(@PathVariable String searchQuery){
-    	return documentService.search(searchQuery);
+    public @ResponseBody List<ElasticDocument> fulltextsearch(@PathVariable String searchQuery){
+    	return elasticDocumentService.fulltextSearch(searchQuery);
     }
 }
