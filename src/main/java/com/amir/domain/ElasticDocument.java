@@ -3,7 +3,7 @@ package com.amir.domain;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 
-@Document(indexName = "amirIndexExample", type = "docs")
+@Document(indexName = "amirindex", type = "docs")
 public class ElasticDocument {
 	@Id
     private Long id;

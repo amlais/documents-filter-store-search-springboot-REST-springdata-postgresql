@@ -35,6 +35,7 @@ public class DocumentController {
     @RequestMapping(value = "/upload", method = RequestMethod.POST, consumes = "multipart/form-data")
     @ResponseStatus(HttpStatus.CREATED)
     public @ResponseBody ResponseMetadata handleFileUpload(@RequestAttribute(value="file") MultipartFile file) throws IOException, SAXException, TikaException {
+    	elasticDocumentService.save(file);
         return documentService.save(file);
     }
     

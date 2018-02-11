@@ -7,12 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.amir.domain.User;
 import com.amir.domain.CustomUserDetails;
+import com.amir.domain.User;
 import com.amir.repository.UserRepository;
 
 @Service
@@ -23,7 +21,7 @@ public class CustomUserDetailsService implements UserDetailsService{
 	public UserDetails loadUserByUsername(String username) {
 		Optional<User> optionalUsers = userRepository.findByUsername(username);
 		optionalUsers
-			.orElseThrow(() -> new UsernameNotFoundException("Username notfound"));
+			.orElseThrow(() -> new UsernameNotFoundException("Username not found"));
 		return optionalUsers
 				.map(CustomUserDetails::new).get();
 	}
