@@ -8,13 +8,13 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
-
 @Configuration
 @EnableAuthorizationServer
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter{
 	
 	@Autowired
 	private AuthenticationManager authenticationManager;
+	
 	@Override
 	public void configure(AuthorizationServerSecurityConfigurer security){
 		
@@ -33,9 +33,10 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 			.accessTokenValiditySeconds(5000)
 			.secret("uploadpass");
 	}
-	//Added to enable GrantType password is not done by defalut spring boot configuration
+	//Added to enable GrantType password is not done by default spring boot configuration
 	@Override
 	public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception{
-		endpoints.authenticationManager(authenticationManager);
+		endpoints
+		.authenticationManager(authenticationManager);
 	}
 }
