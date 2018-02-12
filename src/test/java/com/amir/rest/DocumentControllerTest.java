@@ -23,6 +23,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.amir.domain.Document;
 import com.amir.service.DocumentService;
+import com.amir.service.ElasticDocumentService;
 import com.amir.service.ResponseMetadata;
 
 /**
@@ -40,6 +41,9 @@ public class DocumentControllerTest {
 
 	@MockBean
 	private DocumentService documentService;
+	
+	@MockBean
+	private ElasticDocumentService elasticDocumentService;
 	
 	Document mockDocument = new Document(1L, "mockTitle.docx", "\n\nmockTextFileContent\n\n\n");
 	Document mockDocument1 = new Document(2L, "mockTitle1.docx", "mockTextFileContent1");
