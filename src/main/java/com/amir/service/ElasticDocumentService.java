@@ -10,7 +10,9 @@ import org.xml.sax.SAXException;
 import com.amir.domain.ElasticDocument;
 
 public interface ElasticDocumentService {
+	
 	ResponseMetadata save(MultipartFile multipartFile) throws IOException, SAXException, TikaException;
-
 	List<ElasticDocument> fulltextSearch(String searchQuery);
+	ElasticDocument findOne(String id);
+	void delete(ElasticDocument ed);
 }
