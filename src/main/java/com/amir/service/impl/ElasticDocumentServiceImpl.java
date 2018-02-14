@@ -46,4 +46,14 @@ public class ElasticDocumentServiceImpl implements ElasticDocumentService{
 	public List<ElasticDocument> fulltextSearch(String searchQuery) {
 		return elasticDocumentRepository.findByFileContainingAllIgnoreCase(searchQuery);
 	}
+	
+	public ElasticDocument findOne(String id) {
+        return elasticDocumentRepository.findOne(id);
+    }
+	
+	public void delete(ElasticDocument ed) {
+        elasticDocumentRepository.delete(ed);
+    }
+	
+
 }
