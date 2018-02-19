@@ -28,7 +28,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 			.withClient("upload-client")
 			.authorizedGrantTypes("client-credentials", "password")
 			.authorities("ADMIN", "USER")
-			.scopes("read", "write","trust")
+			.scopes("read", "write", "trust")
 			.resourceIds("oauth2-resource")
 			.accessTokenValiditySeconds(5000)
 			.secret("uploadpass");
