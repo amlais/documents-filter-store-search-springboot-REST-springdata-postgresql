@@ -49,6 +49,11 @@ public class DocumentController {
         return documentService.findAll();
     }
     
+    @RequestMapping(value = "/message/", method = RequestMethod.GET)
+    public String getMessage() {
+        return "{\"id\":1, \"content\":\"Hello REST\"}";
+    }
+    
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
     public @ResponseBody ResponseMetadata deleteDocument(@PathVariable Long id){
     	 return documentService.deleteById(id);
