@@ -62,6 +62,18 @@ public class SecurityTests {
 		// @formatter:on
 	}
 
+	@Test
+	public void docsAuthorized() throws Exception {
+		String accessToken = getAccessToken("amir.lais", "123456");
+
+		// @formatter:off
+		mvc.perform(get("/doc/message/")
+				.header("Authorization", "Bearer " + accessToken))
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$.id", is(1)))
+				.andExpect(jsonPath("$.content", is("Hello REST")));
+	}
+	
 	private String getAccessToken(String username, String password) throws Exception {
 		String authorization = "Basic "
 				+ new String(Base64Utils.encode("upload-client:uploadpass".getBytes()));
@@ -91,17 +103,5 @@ public class SecurityTests {
 		// @formatter:on
 
 		return content.substring(17, 53);
-	}
-
-	@Test
-	public void docsAuthorized() throws Exception {
-		String accessToken = getAccessToken("amir.lais", "123456");
-
-		// @formatter:off
-		mvc.perform(get("/doc/message/")
-				.header("Authorization", "Bearer " + accessToken))
-				.andExpect(status().isOk())
-				.andExpect(jsonPath("$.id", is(1)))
-				.andExpect(jsonPath("$.content", is("Hello REST")));
 	}
 }
