@@ -1,8 +1,11 @@
 package com.amir.service;
 
 
+import static org.junit.Assert.assertTrue;
+
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import org.junit.Before;
@@ -12,6 +15,9 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Optional;
@@ -45,6 +51,13 @@ public class CustomUserDetailsServiceTest {
 	}
     
     @Test
-	public void firstTest(){
+	public void testloadUserByUsername(){
+    	UserDetails userDetails = customUserDetailsService.loadUserByUsername("amir.lais");
+    	Collection<? extends GrantedAuthority> u = userDetails.getAuthorities();
+    	assertTrue(userDetails.getUsername().equals("amir.lais"));
+    	assertTrue(userDetails.isAccountNonExpired());
+    	assertTrue(userDetails.isEnabled());
+    	assertTrue(userDetails.isAccountNonLocked());
+    	assertTrue(u.toArray()[0].toString().equals("ADMIN"));
 	}
 }
